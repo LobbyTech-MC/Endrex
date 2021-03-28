@@ -16,10 +16,8 @@ public class EndrexResourceItem extends EndrexItem {
 	private boolean applyRecipe;
 	private RecipeDisplayItem machine;
 	private ItemStack recipeOutput;
-	
 	public EndrexResourceItem(JavaPlugin plugin, SlimefunItemStack item, int randomMin, int randomMax) {
 		super(EndrexItems.CATEGORY_RESOURCES, item, RecipeType.GEO_MINER, new ItemStack[0]);
-		this.item = item;
 		this.applyRecipe = false;
 		machine = null;
 		recipeOutput = null;

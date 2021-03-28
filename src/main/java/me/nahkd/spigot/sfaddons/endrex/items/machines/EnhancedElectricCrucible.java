@@ -24,7 +24,6 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.interfaces.InventoryBlock;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
@@ -60,7 +59,7 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 		this.liquidCapacity = liquidCapacity;
 		
 		createPreset(this, "&8Enhanced Electric Crucible", this::menuPreset);
-		registerBlockHandler(id, (player, block, tool, reason) -> {
+		registerBlockHandler(getId(), (player, block, tool, reason) -> {
 			BlockMenu inv = BlockStorage.getInventory(block);
 			if (inv != null) {
 				InventoryUtils.dropItem(this, block);
@@ -140,7 +139,7 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 		// Processing liquids
 		int mbLeft = 0;
 		if (processing.containsKey(b)) {
-			if (ChargableBlock.getCharge(b) >= jPerTick && mb < liquidCapacity) {
+			if (getCharge(b.getLocation()) >= jPerTick && mb < liquidCapacity) {
 				mbLeft = processMbLeft.get(b);
 				int mbTick;
 				if (mbPerTick > mbLeft) mbTick = mbLeft;
@@ -154,9 +153,9 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 					processMbLeft.remove(b);
 				} else processMbLeft.put(b, mbLeft);
 				
-				ChargableBlock.addCharge(b, -jPerTick);
+				addCharge(b.getLocation(), -jPerTick);
 			}
-		} else if (input != null && input.getType() != Material.AIR && ChargableBlock.getCharge(b) >= jPerTick && mb < liquidCapacity) {
+		} else if (input != null && input.getType() != Material.AIR && getCharge(b.getLocation()) >= jPerTick && mb < liquidCapacity) {
 			// Get "recipe" and add it to map for processing
 			for (Entry<ItemStack, CustomLiquid> entry : inputs_liquidTypes.entrySet()) {
 				//  && inputs_liquidTypes.containsKey(input)

@@ -1,6 +1,7 @@
 package me.nahkd.spigot.sfaddons.endrex.items.machines;
 
 import java.util.HashMap;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +19,6 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.interfaces.InventoryBlock;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
@@ -47,7 +47,7 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
 		this.liquidCapacity = liquidCapacity;
 		
 		createPreset(this, "&8Dusts Fabricator", this::menuPreset);
-		registerBlockHandler(id, (player, block, tool, reason) -> {
+		registerBlockHandler(getId(), (player, block, tool, reason) -> {
 			BlockMenu inv = BlockStorage.getInventory(block);
 			if (inv != null) {
 				// Drop items in inventory
@@ -123,7 +123,7 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
 		
 		int mbLeft = 0;
 		// Process
-		if (ChargableBlock.getCharge(b) >= jPerTick) {
+		if (getCharge(b.getLocation()) >= jPerTick) {
 			if (processMbLeft.containsKey(b)) {
 				CustomLiquid processingLiquid = processing.get(b);
 				int processingLeft = processMbLeft.get(b);
@@ -136,7 +136,7 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
 				} else processMbLeft.put(b, processingLeft);
 				mbLeft = processingLeft;
 				
-				ChargableBlock.addCharge(b, -jPerTick);
+				addCharge(b.getLocation(), -jPerTick);
 			} else if (liquid != null && mb > 0) {
 				// Consume liquid
 				int mbPerItem = inputs_mbPerItem.get(liquid);

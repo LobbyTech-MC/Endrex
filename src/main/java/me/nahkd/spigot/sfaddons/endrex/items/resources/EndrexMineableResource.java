@@ -2,14 +2,17 @@ package me.nahkd.spigot.sfaddons.endrex.items.resources;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
@@ -43,15 +46,17 @@ public class EndrexMineableResource extends EndrexItem {
 		this.generator = getGenerator(this, 3, 12, 5);
 		this.outputItem = output;
 		
-		registerBlockHandler(id, (player, block, tool, reason) -> {
-			// block.getDrops().clear();
-			ItemStack drop = new ItemStack(outputItem);
-			int fortune = player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-			drop.setAmount((fortune > 0? Endrex.getRandomizer().nextInt(fortune) : 0) + 1);
-			block.getWorld().dropItem(block.getLocation(), drop);
-			block.setType(Material.AIR);
-			BlockStorage.clearBlockInfo(block);
-			return false;
+		addItemHandler(new BlockBreakHandler(false, false) {
+			
+			@Override
+			public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
+				ItemStack drop = new ItemStack(outputItem);
+				int fortune = e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+				drop.setAmount((fortune > 0? Endrex.getRandomizer().nextInt(fortune) : 0) + 1);
+				e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), drop);
+				e.getBlock().setType(Material.AIR);
+				BlockStorage.clearBlockInfo(e.getBlock());
+			}
 		});
 	}
 	public EndrexMineableResource setGenerator(OreChunksGenerator generator) {
@@ -76,7 +81,7 @@ public class EndrexMineableResource extends EndrexItem {
 				if (chunk.getBlock(x, y, z).getType() != Material.END_STONE) continue;
 				Block block = chunk.getBlock(x, y, z);
 				block.setType(resource.getItem().getType());
-				BlockStorage.setBlockInfo(block, "{\"id\":\"" + resource.getID() + "\"}", false);
+				BlockStorage.setBlockInfo(block, "{\"id\":\"" + resource.getId() + "\"}", false);
 			}
 		};
 	}
