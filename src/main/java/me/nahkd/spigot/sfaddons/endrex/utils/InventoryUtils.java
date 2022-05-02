@@ -17,6 +17,7 @@ import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
  * @author nahkd123
  *
  */
+@SuppressWarnings("deprecation")
 public class InventoryUtils {
 	
 	/**
@@ -31,24 +32,18 @@ public class InventoryUtils {
 	public static void consumeHand(PlayerInventory inv, EquipmentSlot slot, int amount) {
 		ItemStack main = new ItemStack(inv.getItemInMainHand());
 		ItemStack off = new ItemStack(inv.getItemInOffHand());
+		
+		// waiting for everyone to use Java 14 so I can use switch expression.
 		switch (slot) {
-		case HAND:
-			inv.setItemInMainHand(changeAmount(main, main.getAmount() - amount));
-			return;
-		case OFF_HAND:
-			inv.setItemInOffHand(changeAmount(off, off.getAmount() - amount));
-			return;
+		case HAND: inv.setItemInMainHand(changeAmount(main, main.getAmount() - amount)); return;
+		case OFF_HAND: inv.setItemInOffHand(changeAmount(off, off.getAmount() - amount)); return;
 		default: break;
 		}
 	}
 	public static void setHand(PlayerInventory inv, EquipmentSlot slot, ItemStack item) {
 		switch (slot) {
-		case HAND:
-			inv.setItemInMainHand(item);
-			return;
-		case OFF_HAND:
-			inv.setItemInOffHand(item);
-			return;
+		case HAND: inv.setItemInMainHand(item); return;
+		case OFF_HAND: inv.setItemInOffHand(item); return;
 		default: break;
 		}
 	}
@@ -81,8 +76,8 @@ public class InventoryUtils {
 		if (item.hasItemMeta()) {
 			ItemMeta meta = item.getItemMeta();
 			if (meta.hasDisplayName()) return meta.getDisplayName();
-			else return "";
-		} else return "";
+			else return null;
+		} else return null;
 	}
 	
 }

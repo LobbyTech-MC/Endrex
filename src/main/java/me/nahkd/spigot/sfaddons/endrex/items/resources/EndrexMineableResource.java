@@ -9,13 +9,14 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
 import me.nahkd.spigot.sfaddons.endrex.Endrex;
 import me.nahkd.spigot.sfaddons.endrex.items.EndrexItem;
 import me.nahkd.spigot.sfaddons.endrex.recipes.EndrexRecipeType;
@@ -39,25 +40,31 @@ public class EndrexMineableResource extends EndrexItem {
 		return outputItem;
 	}
 	
-	public EndrexMineableResource(Category category, SlimefunItemStack item, double generateChance, ItemStack output) {
+	public EndrexMineableResource(ItemGroup category, SlimefunItemStack item, double generateChance, ItemStack output) {
 		super(category, item, EndrexRecipeType.RANDOMLY_GENERATED, new ItemStack[0]);
 		
 		this.generateChance = generateChance;
 		this.generator = getGenerator(this, 3, 12, 5);
 		this.outputItem = output;
 		
-		addItemHandler(new BlockBreakHandler(false, false) {
-			
-			@Override
-			public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
-				ItemStack drop = new ItemStack(outputItem);
-				int fortune = e.getPlayer().getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
-				drop.setAmount((fortune > 0? Endrex.getRandomizer().nextInt(fortune) : 0) + 1);
-				e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), drop);
-				e.getBlock().setType(Material.AIR);
-				BlockStorage.clearBlockInfo(e.getBlock());
-			}
-		});
+		addItemHandler(new BlockBreakHandler(false, true) {
+            @Override
+            public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
+                Player player = e.getPlayer();
+                Block block = e.getBlock();
+                
+                ItemStack drop = new ItemStack(outputItem);
+                int fortune = player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+                drop.setAmount((fortune > 0? Endrex.getRandomizer().nextInt(fortune) : 0) + 1);
+                BlockStorage.clearBlockInfo(block);
+                
+                //drops.clear();
+                //drops.add(item);
+                e.setCancelled(true);
+                block.getWorld().dropItem(block.getLocation(), drop);
+                block.setType(Material.AIR);
+            }
+        });
 	}
 	public EndrexMineableResource setGenerator(OreChunksGenerator generator) {
 		this.generator = generator;

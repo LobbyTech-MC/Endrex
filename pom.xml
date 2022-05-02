@@ -3,30 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.nahkd.spigot.sfaddons</groupId>
   <artifactId>Endrex</artifactId>
-  <version>1.0.4-b1</version>
+  <version>1.1.1</version>
   
   <properties>
-  	<maven.compiler.source>1.8</maven.compiler.source>
-  	<maven.compiler.target>1.8</maven.compiler.target>
-  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
   <repositories>
   	<repository>
-  		<id>paper-repo</id>
-  		<url>https://repo.destroystokyo.com/repository/maven-public/</url>
-  	</repository>
-  	
-  	<repository>
   		<id>spigot-repo</id>
   		<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
   	</repository>
-  	
-  	<!--<repository>
-  		<id>local-repo</id>
-  		<url>file://E/thevaildfolder/spigot 1.15.2/</url>
-  	</repository>-->
-  	
   	<repository>
   		<id>jitpack.io</id>
   		<url>https://jitpack.io</url>
@@ -85,33 +72,25 @@
         </executions>
   		</plugin>
   		
-  		<!-- Eclipse Compiler. Disable it if you want. It just build faster -->
   		<plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.8.0</version>
         <configuration>
-          <compilerId>eclipse</compilerId>
+          <release>11</release>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-compiler-eclipse</artifactId>
-            <version>2.8.1</version>
-          </dependency>
-        </dependencies>
       </plugin>
   	</plugins>
   </build>
   
   <dependencies>
   	<dependency>
-  		<groupId>org.bukkit</groupId>
-  		<artifactId>bukkit</artifactId>
-  		<version>1.15.2-R0.1-SNAPSHOT</version>
+  		<groupId>org.spigotmc</groupId>
+  		<artifactId>spigot-api</artifactId>
+  		<version>1.16.5-R0.1-SNAPSHOT</version>
   		<scope>provided</scope>
   	</dependency>
   	
-  	<dependency>
+  	<!--<dependency>
   		<groupId>com.github.TheBusyBiscuit</groupId>
   		<artifactId>CS-CoreLib</artifactId>
   		<version>8081bb4fe4</version>
@@ -126,7 +105,7 @@
   				<artifactId>bstats-bukkit</artifactId>
   			</exclusion>
   		</exclusions>
-  	</dependency>
+  	</dependency>-->
   	
   	<dependency>
   		<groupId>com.github.TheBusyBiscuit</groupId>
@@ -138,16 +117,11 @@
   				<groupId>io.github.thebusybiscuit</groupId>
   				<artifactId>cscorelib2</artifactId>
   			</exclusion>
-  			<exclusion>
-  				<groupId>org.bstats</groupId>
-  				<artifactId>bstats-bukkit</artifactId>
-  			</exclusion>
   		</exclusions>
   	</dependency>
   </dependencies>
+  
   <name>Endrex</name>
   <url>https://github.com/nahkd123/Endrex</url>
-  <description>This is a Slimefun addon, that makes &quot;The End&quot; world less boring (I guess?). You can explore this world, find some wild purple trees, or just came here with GEO Miner to gather resources.
-
-and yes, I've copied them from github</description>
+  <description>This is a Slimefun addon, that makes &quot;The End&quot; world less boring (I guess?). You can explore this world, find some wild purple trees, or just came here with GEO Miner to gather resources</description>
 </project>
