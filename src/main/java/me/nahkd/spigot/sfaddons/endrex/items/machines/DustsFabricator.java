@@ -1,6 +1,7 @@
 package me.nahkd.spigot.sfaddons.endrex.items.machines;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -63,6 +64,7 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
                     processMbLeft.remove(block);
                 }
             }
+
         });
     }
     
