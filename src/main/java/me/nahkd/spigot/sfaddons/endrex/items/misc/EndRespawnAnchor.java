@@ -51,7 +51,7 @@ public class EndRespawnAnchor extends EndrexItem {
 					BlockStorage.clearBlockInfo(b);
 					b.setType(Material.AIR);
 					b.getWorld().createExplosion(b.getLocation(), 6.9F, true);
-					player.sendMessage("§7And yes, it doesn't work in here.");
+					player.sendMessage("§7是的，它无法在此工作");
 					// And no, stop telling me to use ChatColor thing, I'll use Alt + 21 instead.
 					return;
 				}

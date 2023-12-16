@@ -23,10 +23,10 @@ public class EndrexRecipeType extends RecipeType {
 	public static EndrexRecipeType RANDOMLY_GENERATED;
 	
 	public static void init(Endrex plugin) {
-		LIQUID_STORAGE = new EndrexRecipeType(new NamespacedKey(plugin, "liquid_storage"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.RESONANT_ENDER_BUCKET), "&eLiquid Storage", "&7Get this item from liquid", "&7storage."));
-		DUSTS_FABRICATOR = new EndrexRecipeType(new NamespacedKey(plugin, "dusts_fabricator"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.DUSTS_FABRICATOR), "&bDusts Fabricator", "&7Fabricate this item from", "&7Dusts Fabricator."));
-		KILL_ENDER_DRAGON = new EndrexRecipeType(new NamespacedKey(plugin, "kill_ender_dragon"), new CustomItemStack(Material.DRAGON_EGG, "&eKill Ender Dragon", "&7Do it."));
-		RANDOMLY_GENERATED = new EndrexRecipeType(new NamespacedKey(plugin, "randomly_generated"), new CustomItemStack(Material.IRON_ORE, "&bRandomly Generated", "&7This block is randomly generated", "&7in The End."));
+		LIQUID_STORAGE = new EndrexRecipeType(new NamespacedKey(plugin, "liquid_storage"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.RESONANT_ENDER_BUCKET), "&e液体储存", "&7从增强型末影电坩埚中获取"));
+		DUSTS_FABRICATOR = new EndrexRecipeType(new NamespacedKey(plugin, "dusts_fabricator"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.DUSTS_FABRICATOR), "&b粉尘塑形机", "&7在粉尘塑形机中制取"));
+		KILL_ENDER_DRAGON = new EndrexRecipeType(new NamespacedKey(plugin, "kill_ender_dragon"), new CustomItemStack(Material.DRAGON_EGG, "&e击杀末影龙", "&7干就完事了"));
+		RANDOMLY_GENERATED = new EndrexRecipeType(new NamespacedKey(plugin, "randomly_generated"), new CustomItemStack(Material.IRON_ORE, "&b随机生成", "&7该方块在末地中随机生成"));
 	}
 	
 	public EndrexRecipeType(NamespacedKey key, ItemStack item) {

@@ -61,7 +61,7 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 		this.jPerTick = jPerTick;
 		this.liquidCapacity = liquidCapacity;
 		
-		createPreset(this, "&8Enhanced Electric Crucible", this::menuPreset);
+		createPreset(this, "&8增强型末影电坩埚", this::menuPreset);
 		addHandlerChain(new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
@@ -86,8 +86,8 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 		recipesDisplay.add(new CustomItemStack(
 				input,
 				friendlyName != null? "&f" + friendlyName : null,
-				"&8\u21E8 &7Produce &f" + InventoryUtils.getFriendlyName(type.defaultDisplay),
-				"&8\u21E8 &e" + output + " &7MB/item"
+				"&8\u21E8 &7生产 &f" + InventoryUtils.getFriendlyName(type.defaultDisplay),
+				"&8\u21E8 &e" + output + " &7MB/物品"
 				));
 	}
 	
@@ -206,8 +206,8 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 					liquid.defaultDisplay,
 							name,
 							"",
-							"&7Capacity: &e" + mb + "&7/" + liquidCapacity + " MB",
-							"&7Processing: &e" + mbLeft + " &7MB"
+							"&7最大容量: &e" + mb + "&7/" + liquidCapacity + " MB",
+							"&7已存容量: &e" + mbLeft + " &7MB"
 					));
 		}
 		if (oldMb != mb && Endrex.allowSyncBlockChange()) {
@@ -225,10 +225,10 @@ public class EnhancedElectricCrucible extends EndrexItem implements EnergyNetCom
 	private static final int[] BGINPUTSLOTS = {0, 1, 2, 9, 11, 18, 19, 20};
 	private static final int[] BGINFOSLOTS = {3, 4, 5, 12, 14, 21, 22, 23};
 	private static final int[] BGOUTPUTSLOTS = {6, 7, 8, 15, 17, 24, 25, 26};
-	private static final CustomItemStack GUI_INPUT = new CustomItemStack(Material.LIME_STAINED_GLASS_PANE, "&aInput");
-	private static final CustomItemStack GUI_OUTPUT = new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&bOutput");
-	private static final CustomItemStack GUI_WAIT = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&ePlease wait", "&7Maybe about 0.25s");
-	private static final CustomItemStack GUI_NOLIQUID = new CustomItemStack(Material.BARRIER, "&cNo Liquid", "&7Nope, nothing :shrug:");
+	private static final CustomItemStack GUI_INPUT = new CustomItemStack(Material.LIME_STAINED_GLASS_PANE, "&a输入槽");
+	private static final CustomItemStack GUI_OUTPUT = new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&b输出槽");
+	private static final CustomItemStack GUI_WAIT = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&e请等待", "&7大约0.25秒");
+	private static final CustomItemStack GUI_NOLIQUID = new CustomItemStack(Material.BARRIER, "&c无液体", "&7这里什么也没有");
 	private void menuPreset(BlockMenuPreset preset) {
 		// preset.setSize(27); // dafuq this cause error tho
 		for (int s : BGINPUTSLOTS) preset.addItem(s, GUI_INPUT, ChestMenuUtils.getEmptyClickHandler());

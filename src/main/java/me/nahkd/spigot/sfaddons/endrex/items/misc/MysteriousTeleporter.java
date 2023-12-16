@@ -49,7 +49,7 @@ public class MysteriousTeleporter extends EndrexItem {
 				ItemStack hand = event.getItem();
 				if (EndrexItems.MYSTERIOUS_TELEPORTER_LINKER.isItem(hand)) {
 					if (data.contains("linkto")) {
-						event.getPlayer().sendMessage("Unable to use: This teleporter has been linked to another one.");
+						event.getPlayer().sendMessage("无法使用: 该传送器已被链接至另外一个传送器");
 						return;
 					}
 					ItemMeta meta = hand.getItemMeta();
@@ -58,26 +58,26 @@ public class MysteriousTeleporter extends EndrexItem {
 						meta.getPersistentDataContainer().set(linkKey, PersistentDataType.STRING, locStr);
 						hand.setItemMeta(meta);
 						InventoryUtils.setHand(event.getPlayer().getInventory(), event.getHand(), hand);
-						event.getPlayer().sendMessage("Mysterious Teleporter Linker: Linked from the linker to the teleporter.");
+						event.getPlayer().sendMessage("神秘传送链接器: 已从链接器链接到传送器");
 						return;
 					}
 					String linkStr = meta.getPersistentDataContainer().get(linkKey, PersistentDataType.STRING);
 					if (locStr.equalsIgnoreCase(linkStr)) {
-						event.getPlayer().sendMessage("Unable to use: You cannot link to the same teleporter.");
+						event.getPlayer().sendMessage("无法使用: 你无法链接两个相同的传送器");
 						return;
 					}
 					String[] strings = linkStr.split(":");
 					
 					Block destBlock = Bukkit.getWorld(strings[0]).getBlockAt(Integer.parseInt(strings[1]), Integer.parseInt(strings[2]), Integer.parseInt(strings[3]));
 					if (!BlockStorage.hasBlockInfo(destBlock)) {
-						event.getPlayer().sendMessage("Unable to use: Cannot find the previously linked teleporter, self-destructing...");
+						event.getPlayer().sendMessage("无法使用: 无法找到先前链接的传送点，请确保它是否存在...");
 						InventoryUtils.consumeHand(event.getPlayer().getInventory(), event.getHand(), 1);
 						return;
 					}
 					Config anotherData = BlockStorage.getLocationInfo(destBlock.getLocation());
 					data.setValue("linkto", linkStr);
 					anotherData.setValue("linkto", locStr);
-					event.getPlayer().sendMessage("Mysterious Teleporter Linker: Linked from the teleporter to another teleporter.");
+					event.getPlayer().sendMessage("神秘传送链接器: 已从链接器链接到另一个传送器");
 					InventoryUtils.consumeHand(event.getPlayer().getInventory(), event.getHand(), 1);
 					return;
 				} else if (EndrexItems.MYSTHERIUM.isItem(hand)) {
@@ -90,7 +90,7 @@ public class MysteriousTeleporter extends EndrexItem {
 							Block dest = block.getWorld().getHighestBlockAt(x, z);
 							if (dest.getType() == Material.AIR || dest.getY() < 0) {
 								if (i < 99) continue;
-								event.getPlayer().sendMessage("§7It seem like it doesn't do anything... How about moving it to new location?");
+								event.getPlayer().sendMessage("§7看起来它并没有工作...试着把它搬到新的地方");
 								return;
 							}
 							dest = dest.getRelative(BlockFace.UP);

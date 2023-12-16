@@ -18,10 +18,10 @@ public class Liquids {
 	public static CustomLiquid MYSTHERIUM;
 	
 	public static void init(Endrex plugin) {
-		WATER = new CustomLiquid(new NamespacedKey(plugin, "water"), new CustomItemStack(Material.WATER_BUCKET, "&fWater"));
-		LAVA = new CustomLiquid(new NamespacedKey(plugin, "lava"), new CustomItemStack(Material.LAVA_BUCKET, "&fLava"));
-		RESONANT_ENDER = new CustomLiquid(new NamespacedKey(plugin, "resonant_ender"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.RESONANT_ENDER), "&3Resonant Ender"));
-		MYSTHERIUM = new CustomLiquid(new NamespacedKey(plugin, "mystherium"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.MYSTHERIUM_LIQUID), "&5Mystherium"));
+		WATER = new CustomLiquid(new NamespacedKey(plugin, "water"), new CustomItemStack(Material.WATER_BUCKET, "&f水"));
+		LAVA = new CustomLiquid(new NamespacedKey(plugin, "lava"), new CustomItemStack(Material.LAVA_BUCKET, "&f岩浆"));
+		RESONANT_ENDER = new CustomLiquid(new NamespacedKey(plugin, "resonant_ender"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.RESONANT_ENDER), "&3末影液"));
+		MYSTHERIUM = new CustomLiquid(new NamespacedKey(plugin, "mystherium"), new CustomItemStack(PlayerHead.getItemStack(EndrexSkulls.MYSTHERIUM_LIQUID), "&5神秘液"));
 	}
 	public static void postInit() {
 		WATER.bucket = new ItemStack(Material.WATER_BUCKET);

@@ -49,7 +49,7 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
         this.jPerTick = jPerTick;
         this.liquidCapacity = liquidCapacity;
         
-        createPreset(this, "&8Dusts Fabricator", this::menuPreset);
+        createPreset(this, "&8粉尘塑形机", this::menuPreset);
         addItemHandler(new BlockBreakHandler(false, true) {
             @Override
             public void onPlayerBreak(BlockBreakEvent e, ItemStack item, List<ItemStack> drops) {
@@ -169,8 +169,8 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
                 liquid.defaultDisplay,
                 name,
                 "",
-                "&7Capacity: &e" + mb + "&7/" + liquidCapacity + " MB",
-                "&7Processing: &e" + mbLeft + " &7MB"
+                "&7最大容量: &e" + mb + "&7/" + liquidCapacity + " MB",
+                "&7已存容量: &e" + mbLeft + " &7MB"
             ));
         }
     }
@@ -180,11 +180,11 @@ public class DustsFabricator extends EndrexItem implements EnergyNetComponent, I
     private static final int[] BGOUTPUTSLOTS = {6, 7, 8, 15, 17, 24, 25, 26};
     private static final int[] BGOUTPUTSLOTS_DUSTS = {45, 46, 47, 48, 49, 50, 51, 52, 53};
     
-    private static final CustomItemStack GUI_INPUT = new CustomItemStack(Material.LIME_STAINED_GLASS_PANE, "&aBucket Input");
-    private static final CustomItemStack GUI_OUTPUT = new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&bBucket Output");
-    private static final CustomItemStack GUI_OUTPUT_DUSTS = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, "&bDusts Output");
-    private static final CustomItemStack GUI_WAIT = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&ePlease wait", "&7Maybe about 0.25s");
-    private static final CustomItemStack GUI_NOLIQUID = new CustomItemStack(Material.BARRIER, "&cNo Liquid", "&7Put a bucket of liquid", "&7in the input slot and take", "&7it from the bucket output", "&7slot.");
+    private static final CustomItemStack GUI_INPUT = new CustomItemStack(Material.LIME_STAINED_GLASS_PANE, "&a桶输入槽");
+    private static final CustomItemStack GUI_OUTPUT = new CustomItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "&b桶输出槽");
+    private static final CustomItemStack GUI_OUTPUT_DUSTS = new CustomItemStack(Material.BLUE_STAINED_GLASS_PANE, "&b粉尘输出槽");
+    private static final CustomItemStack GUI_WAIT = new CustomItemStack(Material.YELLOW_STAINED_GLASS_PANE, "&e请稍等", "&7可能需要0.25s");
+    private static final CustomItemStack GUI_NOLIQUID = new CustomItemStack(Material.BARRIER, "&无液体", "&7请在输入槽内放入一桶液体", "&7或将桶从输出槽中拿开");
     
     private void menuPreset(BlockMenuPreset preset) {
         for (int s : BGINPUTSLOTS) preset.addItem(s, GUI_INPUT, ChestMenuUtils.getEmptyClickHandler());
