@@ -65,7 +65,7 @@ public class EndRespawnAnchor extends EndrexItem {
 					event.cancel();
 					return;
 				}
-				player.sendMessage("Respawn Anchor: Changed respawn point for this world");
+				player.sendMessage("重生锚: 已重置这个世界的出生点");
 				player.getPersistentDataContainer().set(worlds.get(b.getWorld()), PersistentDataType.STRING, b.getX() + ":" + b.getY() + ":" + b.getZ());
 			}
 		});

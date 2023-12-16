@@ -47,7 +47,7 @@ public class PlayerEventsHandlers implements Listener {
 			if (BlockStorage.check(anchor, EndrexItems.END_RESPAWN_ANCHOR.getId())) {
 				int stage = Integer.parseInt(BlockStorage.getLocationInfo(anchor.getLocation(), "stage"));
 				if (stage <= 0) {
-					player.sendMessage("§7Feed your anchor next time!");
+					player.sendMessage("§7请激活的重生锚!");
 					player.getPersistentDataContainer().remove(key);
 					return;
 				}
@@ -58,7 +58,7 @@ public class PlayerEventsHandlers implements Listener {
 				event.setRespawnLocation(new Location(world, x, y, z));
 				return;
 			} else {
-				player.sendMessage("§7It seems like someone broke your respawn anchor...");
+				player.sendMessage("§7似乎有人破坏了你的重生锚...");
 				player.getPersistentDataContainer().remove(key);
 				return;
 			}

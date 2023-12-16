@@ -32,7 +32,7 @@ public class InventoryEventsHandlers implements Listener {
 			if (meta.getLore().get(0).equals(EndrexLoreBuilder.CLICK_TO_UNLOCK)) {
 				// Add crap to the item
 				List<String> lore = meta.getLore();
-				lore.set(0, "§7§oMagically created");
+				lore.set(0, "§7§o创造与魔法");
 				meta.setLore(lore);
 				
 				equipment.applyEnchantment(meta);
