@@ -20,7 +20,7 @@ public class InventoryEventsHandlers implements Listener {
 	public void click(InventoryClickEvent event) {
 		if (event.getClickedInventory() != event.getInventory()) return;
 		switch (event.getView().getTitle()) {
-		case "Slimefun Guide": return;
+		case "粘液科技指南": return;
 		}
 
 		ItemStack itemStack = event.getCurrentItem();

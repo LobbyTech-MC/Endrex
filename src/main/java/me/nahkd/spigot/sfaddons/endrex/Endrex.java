@@ -80,7 +80,7 @@ public class Endrex extends JavaPlugin implements SlimefunAddon {
         getServer().getPluginManager().registerEvents(new PlayerEventsHandlers(this), this);
         getServer().getPluginManager().registerEvents(new InventoryEventsHandlers(), this);
         
-        logger.sendMessage("§3[Endrex] §bPlugin enabled in " + (System.currentTimeMillis() - timer) + "ms");
+        logger.sendMessage("§3[末地科技] §bPlugin enabled in " + (System.currentTimeMillis() - timer) + "ms");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Endrex extends JavaPlugin implements SlimefunAddon {
     	instance = null;
     	runtimeRandomizer = null;
     	loadedSchemas.clear(); loadedSchemas = null;
-        logger.sendMessage("§3[Endrex] §bPlugin disabled in " + (System.currentTimeMillis() - timer) + "ms");
+        logger.sendMessage("§3[末地科技] §bPlugin disabled in " + (System.currentTimeMillis() - timer) + "ms");
     }
 
     @Override
