@@ -54,7 +54,7 @@ public class EndrexMineableResource extends EndrexItem {
                 Block block = e.getBlock();
                 
                 ItemStack drop = new ItemStack(outputItem);
-                int fortune = player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+                int fortune = player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.FORTUNE);
                 drop.setAmount((fortune > 0? Endrex.getRandomizer().nextInt(fortune) : 0) + 1);
                 BlockStorage.clearBlockInfo(block);
                 
@@ -88,7 +88,8 @@ public class EndrexMineableResource extends EndrexItem {
 				if (chunk.getBlock(x, y, z).getType() != Material.END_STONE) continue;
 				Block block = chunk.getBlock(x, y, z);
 				block.setType(resource.getItem().getType());
-				BlockStorage.setBlockInfo(block, "{\"id\":\"" + resource.getId() + "\"}", false);
+				String blockInfo = "{\"id\":\"" + resource.getId() + "\"}";
+				BlockStorage.addBlockInfo(block, blockInfo, blockInfo, false);
 			}
 		};
 	}

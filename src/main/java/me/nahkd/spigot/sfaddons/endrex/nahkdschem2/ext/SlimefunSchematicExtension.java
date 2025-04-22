@@ -26,13 +26,14 @@ public class SlimefunSchematicExtension extends SchematicExtension {
 
 	@Override
 	public void serialize(OutputStream stream, Block block) throws IOException {
-		BinaryUtils.write_utf8String(stream, BlockStorage.getBlockInfoAsJson(block));
+		BinaryUtils.write_utf8String(stream, BlockStorage.getLocationInfo(block.getLocation()).toString());
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void deserialize(InputStream stream, Block block) throws IOException {
 		String json = BinaryUtils.read_utf8String(stream);
-		BlockStorage.setBlockInfo(block, json, true);
+		BlockStorage.addBlockInfo(block, json, json, true);
 	}
 
 	@Override

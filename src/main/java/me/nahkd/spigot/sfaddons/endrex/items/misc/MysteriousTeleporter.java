@@ -37,6 +37,7 @@ public class MysteriousTeleporter extends EndrexItem {
 		linkKey = new NamespacedKey(plugin, "linkto");
 	}
 	
+	@SuppressWarnings("deprecation")
 	public MysteriousTeleporter(ItemGroup category, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
 		super(category, item, recipeType, recipe);
 		
@@ -101,7 +102,8 @@ public class MysteriousTeleporter extends EndrexItem {
 							dest.setType(Material.PLAYER_HEAD);
 							//EndrexUtils.setSkullFromHash(dest, EndrexSkulls.MYSTERIOUS_TELEPORTER_HASH);
 							PlayerHead.setSkin(block, EndrexSkulls.MYSTERIOUS_TELEPORTER, true);
-							BlockStorage.setBlockInfo(dest.getLocation(), "{\"id\":\"" + getId() + "\",\"linkto\":\"" + srcStr +"\"}", false);
+							String blockInfo = "{\"id\":\"" + getId() + "\",\"linkto\":\"" + srcStr +"\"}";
+							BlockStorage.addBlockInfo(dest.getLocation(), blockInfo, blockInfo, false);
 							break;
 						}
 					} else {

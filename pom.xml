@@ -21,7 +21,7 @@
   </repositories>
   
   <build>
-  	<finalName>[粘液科技]${project.name} ${project.version}</finalName>
+  	<finalName>[sf]${project.name} ${project.version}</finalName>
   	<defaultGoal>clean package</defaultGoal>
   	<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
   	
@@ -47,7 +47,7 @@
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-resources-plugin</artifactId>
-  			<version>3.1.0</version>
+  			<version>3.3.1</version>
         <configuration>
             <nonFilteredFileExtensions>
               <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
@@ -76,7 +76,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <release>11</release>
+          <release>21</release>
         </configuration>
       </plugin>
   	</plugins>
@@ -86,7 +86,7 @@
   	<dependency>
   		<groupId>org.spigotmc</groupId>
   		<artifactId>spigot-api</artifactId>
-  		<version>1.16.5-R0.1-SNAPSHOT</version>
+  		<version>1.21.1-R0.1-SNAPSHOT</version>
   		<scope>provided</scope>
   	</dependency>
   	
@@ -108,9 +108,9 @@
   	</dependency>-->
   	
   	<dependency>
-            <groupId>com.github.Slimefun</groupId>
+            <groupId>com.github.SlimefunGuguProject</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-35</version>
+            <version>2024.3.1</version>
             <scope>provided</scope>
         </dependency>
   </dependencies>
