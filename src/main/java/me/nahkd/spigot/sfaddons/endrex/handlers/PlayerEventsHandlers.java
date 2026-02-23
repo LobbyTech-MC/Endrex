@@ -39,8 +39,9 @@ public class PlayerEventsHandlers implements Listener {
 		if (!player.getPersistentDataContainer().has(LAST_DEATH_WORLD, PersistentDataType.STRING)) return;
 		World world = plugin.getServer().getWorld(player.getPersistentDataContainer().get(LAST_DEATH_WORLD, PersistentDataType.STRING));
 		if (world == null) return;
-		if (world.getEnvironment() == Environment.THE_END && player.getPersistentDataContainer().has(EndRespawnAnchor.getKeyWorldWorld(world), PersistentDataType.STRING)) {
-			NamespacedKey key = EndRespawnAnchor.getKeyWorldWorld(world);
+		NamespacedKey key = EndRespawnAnchor.getKeyWorldWorld(world);
+		if(key == null) return;
+		if (world.getEnvironment() == Environment.THE_END && player.getPersistentDataContainer().has(key, PersistentDataType.STRING)) {
 			String[] arr = player.getPersistentDataContainer().get(key, PersistentDataType.STRING).split("\\:");
 			int x = Integer.parseInt(arr[0]), y = Integer.parseInt(arr[1]), z = Integer.parseInt(arr[2]);
 			Block anchor = world.getBlockAt(x, y, z);
