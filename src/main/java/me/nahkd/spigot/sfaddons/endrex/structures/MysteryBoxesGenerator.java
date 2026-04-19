@@ -11,12 +11,16 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import me.nahkd.spigot.sfaddons.endrex.Endrex;
 import me.nahkd.spigot.sfaddons.endrex.items.EndrexItems;
-import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.VectorInt;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.Schematic;
+import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.VectorInt;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.loot.LootTableEntry;
 
 public class MysteryBoxesGenerator extends StructuresGenerator {
@@ -56,13 +60,26 @@ public class MysteryBoxesGenerator extends StructuresGenerator {
 		int mx = rand.nextInt(13);
 		for (int i = 0; i < mx; i++) rand.nextInt();
 		double hit = rand.nextDouble();
-		if (hit <= 0.03) {
+		try (EditSession editSession = WorldEdit.getInstance().newEditSessionBuilder()
+                .world(BukkitAdapter.adapt(world))
+                .allowedRegionsEverywhere()
+                .limitUnlimited()
+                .changeSetNull()
+                .fastMode(true)
+                .build()) {
+			if (hit <= 0.03) {
 			int genX = rand.nextInt(9) + (newChunk.getX() * 16),
 				genZ = rand.nextInt(9) + (newChunk.getZ() * 16),
 				y = 100 + rand.nextInt(32);
 			if (world.getBlockAt(genX, y, genZ).getBiome() == Biome.SMALL_END_ISLANDS) return;
-			schem.pasteSchematic(world, new VectorInt(genX, y, genZ), lootTable);
-		}
+			schem.pasteSchematic(world, new VectorInt(genX, y, genZ), lootTable, editSession);
+		    }
+            editSession.flushQueue();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 	}
 
 }

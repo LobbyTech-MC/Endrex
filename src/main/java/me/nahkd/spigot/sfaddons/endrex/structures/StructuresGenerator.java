@@ -9,8 +9,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.VectorInt;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.Schematic;
+import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.VectorInt;
 
 public abstract class StructuresGenerator {
 	

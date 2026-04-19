@@ -12,21 +12,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.block.data.Bisected.Half;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.data.type.Stairs.Shape;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.world.block.BlockState;
+
+import me.nahkd.spigot.sfaddons.endrex.Endrex;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.ext.CustomBlockData;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.ext.SchematicExtension;
 import me.nahkd.spigot.sfaddons.endrex.nahkdschem2.loot.LootTableEntry;
@@ -215,11 +222,11 @@ public class Schematic {
 	 * @param w
 	 * @param loc
 	 */
-	public void pasteSchematic(World w, VectorInt loc) {
-		pasteSchematic(w, loc, null, null);
+	public void pasteSchematic(World w, VectorInt loc, EditSession editSession) {
+		pasteSchematic(w, loc, null, null, editSession);
 	}
-	public void pasteSchematic(World w, VectorInt loc, List<LootTableEntry> lootTable) {
-		pasteSchematic(w, loc, lootTable, null);
+	public void pasteSchematic(World w, VectorInt loc, List<LootTableEntry> lootTable, EditSession editSession) {
+		pasteSchematic(w, loc, lootTable, null, editSession);
 	}
 	/**
 	 * Paste the schematic, and replace chest items with loot inside loot table
@@ -228,6 +235,7 @@ public class Schematic {
 	 * @param transparent Block that's won't be replaced while pasting, or null for nothing
 	 * @param lootTable The loot table, or null for empty chests
 	 */
+	/*
 	public void pasteSchematic(World w, VectorInt loc, List<LootTableEntry> lootTable, Collection<Material> transparent) {
 		int index = 0;
 		int stateIndex = 0;
@@ -264,7 +272,7 @@ public class Schematic {
 				b.setBlockData(blockData);
 				stateIndex++;
 			}
-			if (b.getState() instanceof Container && lootTable != null) {
+			if (b.getState(false) instanceof Container && lootTable != null) {
 				// Add loot to container
 				Container container = (Container) b.getState();
 				Inventory inv = container.getInventory();
@@ -279,6 +287,97 @@ public class Schematic {
 				e.printStackTrace();
 			}
 		}
+	}
+	*/
+	public void pasteSchematic(World w, VectorInt loc, List<LootTableEntry> lootTable, Collection<Material> transparent, EditSession editSession) {
+	    Bukkit.getScheduler().runTaskAsynchronously(Endrex.instance, () -> {
+	        
+	            
+	            
+	            int index = 0;
+	            int stateIndex = 0;
+	            VectorInt bloc = new VectorInt();
+	            
+	            for (int x = 0; x < size.x; x++) {
+	                for (int y = 0; y < size.y; y++) {
+	                    for (int z = 0; z < size.z; z++) {
+	                        int worldX = loc.x + x;
+	                        int worldY = loc.y + y;
+	                        int worldZ = loc.z + z;
+	                        
+	                        bloc.set(x, y, z);
+	                        
+	                        if (transparent != null && transparent.contains(mappedIDs.get((int) schemData[index]))) {
+	                            index++;
+	                            continue;
+	                        }
+	                        
+	                        Material material = mappedIDs.get((int) schemData[index]);
+	                        BlockState blockState = BukkitAdapter.adapt(material.createBlockData());
+	                        
+	                        if (isSpecial(material.createBlockData())) {
+	                            int lmaoayy = blockStates[stateIndex];
+	                            BlockData blockData = material.createBlockData();
+	                            
+	                            if (blockData instanceof Directional) {
+	                                Directional dir = (Directional) blockData;
+	                                dir.setFacing(numberToDirection(lmaoayy - ((lmaoayy >> 8) << 8)));
+	                                blockState = BukkitAdapter.adapt(blockData);
+	                            }
+	                            if (blockData instanceof Bisected) {
+	                                Bisected bis = (Bisected) blockData;
+	                                bis.setHalf(numberToHalf(lmaoayy - ((lmaoayy >> 8) << 8)));
+	                                blockState = BukkitAdapter.adapt(blockData);
+	                            }
+	                            if (blockData instanceof Stairs) {
+	                                Stairs stairs = (Stairs) blockData;
+	                                stairs.setShape(numberToCorner(lmaoayy >> 8));
+	                                blockState = BukkitAdapter.adapt(blockData);
+	                            }
+	                            if (blockData instanceof Levelled) {
+	                                Levelled lv = (Levelled) blockData;
+	                                lv.setLevel((lmaoayy >> 8) & 0b0000_1111);
+	                                blockState = BukkitAdapter.adapt(blockData);
+	                            }
+	                            stateIndex++;
+	                        }
+	                        
+	                        BlockVector3 position = BlockVector3.at(worldX, worldY, worldZ);
+	                        editSession.setBlock(position, blockState);
+	                        
+	                        index++;
+	                        
+	                        // 容器战利品需要在主线程处理
+	                        if (lootTable != null && material.createBlockData() instanceof Container) {
+	                            final BlockVector3 finalPos = position;
+	                            final List<LootTableEntry> finalLootTable = lootTable;
+	                            Bukkit.getScheduler().runTask(Endrex.instance, () -> {
+	                                Block block = w.getBlockAt(finalPos.getBlockX(), finalPos.getBlockY(), finalPos.getBlockZ());
+	                                if (block.getState(false) instanceof Container) {
+	                                    Container container = (Container) block.getState();
+	                                    Inventory inv = container.getInventory();
+	                                    ItemStack[] is = inv.getContents();
+	                                    LootTables.loot(is, finalLootTable);
+	                                    inv.setContents(is);
+	                                    container.update();
+	                                }
+	                            });
+	                        }
+	                        
+	                        if (customs.containsKey(bloc)) {
+	                            final BlockVector3 finalPos = position;
+	                            try {
+	                                CustomBlockData dat = customs.get(bloc);
+	                                dat.extension.deserialize(new ByteArrayInputStream(dat.data), w.getBlockAt(finalPos.getBlockX(), finalPos.getBlockY(), finalPos.getBlockZ()));
+	                            } catch (IOException e) {
+	                                e.printStackTrace();
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	            
+	    });
 	}
 	
 	// WARNING: lots of binary stuffs

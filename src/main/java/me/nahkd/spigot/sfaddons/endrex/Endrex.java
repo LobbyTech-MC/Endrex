@@ -25,7 +25,7 @@ import me.nahkd.spigot.sfaddons.endrex.recipes.EndrexRecipeType;
 public class Endrex extends JavaPlugin implements SlimefunAddon {
 
 	private static boolean syncBlockChange;
-	private static Endrex instance;
+	public static Endrex instance;
 	private static Random runtimeRandomizer;
 	public static boolean allowSyncBlockChange() {return syncBlockChange;}
 	public static Endrex getRunningInstance() {return instance;}
