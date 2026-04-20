@@ -3,7 +3,7 @@ author: nahkd123
 description: Add stuffs for the boring The End
 main: me.nahkd.spigot.sfaddons.endrex.Endrex
 website: https://github.com/nahkd123/Endrex
-depend: ["Slimefun"]
+depend: [ Slimefun, FastAsyncWorldEdit ]
 softdepends:
 - "BentoBox"                 # Load after the BentoBox plugin is loaded. Why? Because sometimes Endrex load before
                              # BentoBox, which cause NPE
